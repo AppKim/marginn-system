@@ -11,7 +11,7 @@
 
 ## 웹페이지
 
-매일 시세를 저장한 뒤 `site/index.html`과 `data/margin.json`을 GitHub Pages에 올립니다.
+매일 시세를 저장한 뒤 `site/index.html`과 `data/margin.json`을 비밀번호로 암호화한 `margin.enc.json`을 GitHub Pages에 올립니다. 비밀번호는 저장소 Settings → Secrets and variables → Actions의 `SITE_PASSWORD`에 넣어 둔 값입니다. 저장소가 공개라서 `data/` 폴더의 원본은 누구나 볼 수 있다는 점은 그대로입니다.
 주소는 https://appkim.github.io/marginn-system/ 이며, 저장소 설정의 Pages에서 Source를 `GitHub Actions`로 바꿔 두어야 합니다.
 
 ## 파일

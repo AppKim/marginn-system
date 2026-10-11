@@ -40,11 +40,24 @@
   tr.warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
   .state { color: var(--muted); padding: 1rem 0; }
   ol { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+  .lockbox { max-width: 22rem; margin: 4rem auto 0; }
+  .lockbox input { font: inherit; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
+  .lockbox button { font: inherit; padding: 0.5rem; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); cursor: pointer; }
+  [hidden] { display: none !important; }
   @media (max-width: 640px) { .nar { display: none; } }
 </style>
 </head>
 <body>
-<main>
+<main id="lock" hidden>
+  <form class="card lockbox" id="lockform">
+    <h1>육의전 채집 마진표</h1>
+    <label for="pw">비밀번호를 입력하세요</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <button type="submit">열기</button>
+    <p class="note" id="lockmsg" role="alert"></p>
+  </form>
+</main>
+<main id="app" hidden>
   <header>
     <h1>육의전 채집 마진표</h1>
     <p class="take" id="take"></p>
@@ -162,20 +175,59 @@
     render();
   }));
 
-  fetch('margin.json', { cache: 'no-store' })
+  const show = (rows) => {
+    data = rows;
+    state.hidden = true;
+    const top = rows.filter((r) => r.verified === 'Y').sort((a, b) => b.margin - a.margin).slice(0, 3);
+    if (top.length === 3) {
+      document.getElementById('take').textContent =
+        `현무 서버 육의전 최저가로 팔 때, 마진 1위는 ${top[0].item} ${fmt(top[0].margin)}냥입니다. 2위 ${top[1].item} ${fmt(top[1].margin)}냥, 3위 ${top[2].item} ${fmt(top[2].margin)}냥이 뒤를 잇습니다.`;
+    }
+    document.getElementById('meta').textContent = `시세 확인 ${rows[0]?.fetched_at ?? '-'} · 금액 단위는 냥 · 시세는 거리니 육의전 기준`;
+    render();
+  };
+
+  const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  const decrypt = async (box, password) => {
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(box.salt), iterations: box.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const buf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data));
+    return JSON.parse(new TextDecoder().decode(buf));
+  };
+
+  const lock = document.getElementById('lock');
+  const app = document.getElementById('app');
+  const msg = document.getElementById('lockmsg');
+  let box = null;
+  const store = {
+    get: () => { try { return localStorage.getItem('marginn-pw'); } catch { return null; } },
+    set: (v) => { try { localStorage.setItem('marginn-pw', v); } catch {} },
+    del: () => { try { localStorage.removeItem('marginn-pw'); } catch {} },
+  };
+
+  const unlock = async (pw, silent) => {
+    try {
+      const rows = await decrypt(box, pw);
+      store.set(pw);
+      lock.hidden = true; app.hidden = false;
+      show(rows);
+    } catch {
+      store.del();
+      lock.hidden = false; app.hidden = true;
+      if (!silent) msg.textContent = '비밀번호가 맞지 않습니다';
+    }
+  };
+
+  document.getElementById('lockform').addEventListener('submit', (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    unlock(document.getElementById('pw').value, false);
+  });
+
+  fetch('margin.enc.json', { cache: 'no-store' })
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then((rows) => {
-      data = rows;
-      state.hidden = true;
-      const top = rows.filter((r) => r.verified === 'Y').sort((a, b) => b.margin - a.margin).slice(0, 3);
-      if (top.length === 3) {
-        document.getElementById('take').textContent =
-          `현무 서버 육의전 최저가로 팔 때, 마진 1위는 ${top[0].item} ${fmt(top[0].margin)}냥입니다. 2위 ${top[1].item} ${fmt(top[1].margin)}냥, 3위 ${top[2].item} ${fmt(top[2].margin)}냥이 뒤를 잇습니다.`;
-      }
-      document.getElementById('meta').textContent = `시세 확인 ${rows[0]?.fetched_at ?? '-'} · 금액 단위는 냥 · 시세는 거리니 육의전 기준`;
-      render();
-    })
-    .catch(() => { state.textContent = '데이터를 불러오지 못했습니다'; });
+    .then((b) => { box = b; const saved = store.get(); lock.hidden = false; if (saved) unlock(saved, true); })
+    .catch(() => { lock.hidden = false; msg.textContent = '데이터를 불러오지 못했습니다'; });
 })();
 </script>
 </body>

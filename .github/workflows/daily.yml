@@ -77,7 +77,11 @@ jobs:
         run: |
           mkdir _site
           cp site/index.html _site/index.html
-          cp data/margin.json _site/margin.json
+
+      - name: 마진표 암호화
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
+        run: node crawler/encrypt.mjs data/margin.json _site/margin.enc.json
 
       - uses: actions/configure-pages@v5
 
