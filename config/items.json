@@ -1,0 +1,21 @@
+{
+  "server": 3,
+  "serverName": "현무",
+  "multiplierPercent": 15,
+  "items": [
+    { "name": "금은화", "place": "륭산", "cost": 100000, "count": 40 },
+    { "name": "백복령", "place": "한라산", "cost": 100000, "count": 40 },
+    { "name": "만년초", "place": "밀림지역", "cost": 200000, "count": 40 },
+    { "name": "천상초", "place": "천년호정상", "cost": 300000, "count": 40 },
+    { "name": "익모초", "place": "대관령", "cost": 500000, "count": 30 },
+    { "name": "착금감록초", "place": "월기봉", "cost": 500000, "count": 50 },
+    { "name": "설삼", "place": "대설산얼음계곡", "cost": 500000, "count": 30 },
+    { "name": "바람꽃", "place": "백호림", "cost": 1000000, "count": 30 },
+    { "name": "동자삼", "place": "개마장원", "cost": 1000000, "count": 40 },
+    { "name": "화염초", "place": "수상한동굴", "cost": 2000000, "count": 30, "group": "수상한동굴" },
+    { "name": "태양초", "place": "수상한동굴", "cost": 0, "count": 30, "group": "수상한동굴" },
+    { "name": "설련화", "place": "히말라야", "cost": 2000000, "count": 30 },
+    { "name": "황금연꽃", "place": "늪지대", "cost": 2000000, "count": 20 },
+    { "name": "백련초", "place": "사막지대", "cost": 2000000, "count": 30 }
+  ]
+}
