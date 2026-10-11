@@ -64,7 +64,6 @@
             <th data-k="place" class="nar"><button type="button">수집처</button></th>
             <th data-k="usage"><button type="button">용도</button></th>
             <th data-k="cost" class="num"><button type="button">채집비용</button></th>
-            <th data-k="expected" class="num nar"><button type="button">획득기대값</button></th>
             <th data-k="price" class="num"><button type="button">개당 시세</button></th>
             <th data-k="revenue" class="num"><button type="button">예상 판매가</button></th>
             <th data-k="margin" class="num"><button type="button">마진</button></th>
@@ -104,8 +103,7 @@
   <section class="card" aria-labelledby="t2">
     <h2 id="t2">계산 방식</h2>
     <ol>
-      <li>획득기대값은 획득수에 총 배율을 적용한 값입니다.</li>
-      <li>예상 판매가는 획득기대값에 개당 시세(육의전 현무 서버 최저가)를 곱한 값입니다.</li>
+      <li>예상 판매가는 한 번 채집으로 얻는 개수(획득수에 총 배율 15%를 적용)에 개당 시세(육의전 현무 서버 최저가)를 곱한 값입니다.</li>
       <li>마진은 예상 판매가에서 채집비용을 뺀 값입니다. 육의전 수수료와 세금은 빼지 않았습니다.</li>
       <li>화염초와 태양초는 같은 수집처에서 함께 나와서 채집비용 한 번에 두 아이템 판매가를 더해 계산합니다.</li>
       <li>노란 표시는 이번에 시세를 읽지 못한 아이템이 들어 있어 전날 값으로 계산했다는 뜻이며, 상위 순위 문구에서 뺍니다.</li>
@@ -149,7 +147,6 @@
       td(tr, r.place, 'nar');
       td(tr, r.usage || '', 'use');
       td(tr, fmt(r.cost), 'num');
-      td(tr, fmtE(r.expected), 'num nar');
       td(tr, fmt(r.price), 'num');
       td(tr, fmt(r.revenue), 'num');
       const m = td(tr, fmt(r.margin), 'num bar' + (r.margin < 0 ? ' neg' : ''));
