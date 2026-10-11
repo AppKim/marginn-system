@@ -43,6 +43,7 @@
   .lockbox { max-width: 22rem; margin: 4rem auto 0; }
   .lockbox input { font: inherit; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
   .lockbox button { font: inherit; padding: 0.5rem; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); cursor: pointer; }
+  .lockbox .show { display: flex; gap: 0.4rem; align-items: center; color: var(--muted); font-size: 0.8125rem; }
   [hidden] { display: none !important; }
   @media (max-width: 640px) {
     .nar { display: none; }
@@ -63,7 +64,8 @@
   <form class="card lockbox" id="lockform">
     <h1>육의전 채집 마진표</h1>
     <label for="pw">비밀번호를 입력하세요</label>
-    <input id="pw" type="password" autocomplete="current-password" required>
+    <input id="pw" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+    <label class="show"><input type="checkbox" id="showpw"> 비밀번호 보기 (한글은 이걸 켜고 입력하세요)</label>
     <button type="submit">열기</button>
     <p class="note" id="lockmsg" role="alert"></p>
   </form>
@@ -230,6 +232,7 @@
     }
   };
 
+  document.getElementById('showpw').addEventListener('change', (e) => { document.getElementById('pw').type = e.target.checked ? 'text' : 'password'; });
   document.getElementById('lockform').addEventListener('submit', (e) => {
     e.preventDefault();
     msg.textContent = '';
