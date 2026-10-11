@@ -44,7 +44,18 @@
   .lockbox input { font: inherit; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
   .lockbox button { font: inherit; padding: 0.5rem; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); cursor: pointer; }
   [hidden] { display: none !important; }
-  @media (max-width: 640px) { .nar { display: none; } }
+  @media (max-width: 640px) {
+    .nar { display: none; }
+    #margin-table, #margin-table tbody, #margin-table tr, #margin-table td { display: block; }
+    #margin-table thead { display: none; }
+    #margin-table tr { padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+    #margin-table td { display: flex; justify-content: space-between; gap: 1rem; border: 0; padding: 0.2rem 0; white-space: normal; min-width: 0; text-align: right; }
+    #margin-table td::before { content: attr(data-label); color: var(--muted); font-size: 0.8125rem; text-align: left; flex: none; }
+    #margin-table td:first-child { font-weight: 600; font-size: 1.0625rem; }
+    #margin-table td:first-child::before { content: none; }
+    #margin-table td.note:empty { display: none; }
+    #margin-table td.note, #margin-table td.use { font-size: 0.8125rem; }
+  }
 </style>
 </head>
 <body>
@@ -165,6 +176,7 @@
       const m = td(tr, fmt(r.margin), 'num bar' + (r.margin < 0 ? ' neg' : ''));
       m.style.setProperty('--w', Math.max(0, (r.margin / max) * 100).toFixed(1) + '%');
       td(tr, r.note || '', 'note');
+      Array.from(tr.children).forEach((c, i) => { c.dataset.label = heads[i].textContent; });
       tbody.appendChild(tr);
     }
   };
