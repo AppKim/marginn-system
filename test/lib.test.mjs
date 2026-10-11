@@ -80,6 +80,9 @@ test('buildRows: 시트에서 확인한 마진과 같다', () => {
   assert.match(by['금은화'].note, /2개 매물/);
   assert.match(by['금은화'].note, /48,000/);
   assert.equal(by['만년초'].note, '');
+  assert.match(by['만년초'].usage, /^금색가루 재료/);
+  assert.match(g.usage, /^붉은색가루 재료/);
+  assert.match(by['백련초'].usage, /^오색가루 재료/);
   assert.equal(by['만년초'].link, itemLink('만년초', 3));
 });
 

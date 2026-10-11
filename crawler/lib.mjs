@@ -137,6 +137,7 @@ export function buildRows(config, prices, freshNames, stamp) {
       margin: revenue - cost,
       verified: verified ? 'Y' : 'N',
       note: notes.join('. '),
+      usage: first.usage ?? '',
       link: itemLink(first.name, server),
       fetched_at: stamp,
     });

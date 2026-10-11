@@ -24,7 +24,7 @@
   .note { margin: 0; color: var(--muted); font-size: 0.8125rem; }
   .scroll { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-  th, td { padding: 0.55rem 0.7rem; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th, td { padding: 0.5rem 0.55rem; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
   th { color: var(--muted); font-size: 0.8125rem; font-weight: 600; }
   th button { all: unset; cursor: pointer; }
   th button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
@@ -34,7 +34,8 @@
   td a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--line); }
   td.bar { background: linear-gradient(90deg, color-mix(in srgb, var(--bar) 25%, transparent) var(--w, 0%), transparent var(--w, 0%)); font-weight: 600; }
   td.neg { color: var(--bad); }
-  td.note { white-space: normal; min-width: 14rem; color: var(--muted); font-size: 0.8125rem; }
+  td.use { white-space: normal; min-width: 10.5rem; font-size: 0.8125rem; line-height: 1.45; }
+  td.note { white-space: normal; min-width: 12rem; color: var(--muted); font-size: 0.8125rem; }
   tr.warn td.note { color: var(--warn); }
   tr.warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
   .state { color: var(--muted); padding: 1rem 0; }
@@ -56,11 +57,12 @@
       <p class="note">머리글을 누르면 그 열 기준으로 정렬됩니다. 아이템 이름을 누르면 거리니 시세 페이지가 열립니다.</p>
     </div>
     <div class="scroll">
-      <table>
+      <table id="margin-table">
         <thead>
           <tr>
             <th data-k="item"><button type="button">아이템</button></th>
             <th data-k="place" class="nar"><button type="button">수집처</button></th>
+            <th data-k="usage"><button type="button">용도</button></th>
             <th data-k="cost" class="num"><button type="button">채집비용</button></th>
             <th data-k="expected" class="num nar"><button type="button">획득기대값</button></th>
             <th data-k="price" class="num"><button type="button">개당 시세</button></th>
@@ -73,6 +75,30 @@
       </table>
     </div>
     <div class="state" id="state">불러오는 중</div>
+  </section>
+
+  <section class="card" aria-labelledby="t3">
+    <div>
+      <h2 id="t3">약초와 가루의 쓰임</h2>
+      <p class="note">약초는 연금술사가 가루를 만드는 재료이고, 가루는 다시 아래 물품의 재료가 됩니다. 만드는 레벨은 연금술사(전문연금술사) 장인 레벨입니다.</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>가루</th><th>만드는 재료</th><th>가루가 쓰이는 곳</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>백색가루 (25레벨)</td><td class="use">백복령·금은화 각 10개, 하급정수 1개</td><td class="use">경험치두루마기-초급, 운남백약, 연마용분말가루, 꼬망(털가면)</td></tr>
+          <tr><td>금색가루 (45레벨)</td><td class="use">만년초·천상초 각 10개, 중급정수 1개</td><td class="use">경험치두루마기-중급, 마을이동주문서-한양, 연마용분말가루</td></tr>
+          <tr><td>푸른색가루 (80레벨)</td><td class="use">익모초·설삼 각 10개, 상급정수 1개</td><td class="use">여류시인의이슬, 연마용분말가루, 안정제, 화공의두루마리, 마력단약-15일</td></tr>
+          <tr><td>안정제 (110레벨)</td><td class="use">푸른색가루 20개, 착금감록초 20개, 이무기비늘 1개</td><td class="use">확인된 자료 없음</td></tr>
+          <tr><td>검은색가루 (125레벨)</td><td class="use">상황버섯·바람꽃·동자삼 각 10개, 생명의정수 1개</td><td class="use">유랑인의글귀, 일장춘몽, 사라수가루, 만년청화, 붉은색가루</td></tr>
+          <tr><td>붉은색가루 (150레벨)</td><td class="use">검은색가루 10개, 화염초·태양초 각 10개</td><td class="use">연금술사의상자, 이동주문서(유명계 3층·한라산·샤오링), 封 시리즈(도·형·모·갑·재), 불사신부, 병법24편-1일, 물품보관패, 오색가루</td></tr>
+          <tr><td>오색가루 (195레벨)</td><td class="use">붉은색가루 10개, 설련화·황금연꽃·늪지석균·백련초 각 10개</td><td class="use">마력단약-15일, 챠우의날개-1일</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">출처: <a href="https://www.gersangjjang.com/zhizuo/skill_lianjin.asp" target="_blank" rel="noopener noreferrer">거상짱 연금술사 제조도안</a>. 제3자 사이트 자료라 게임 업데이트로 달라졌을 수 있습니다. 백복령은 해당 사이트에서 백봉령으로 적혀 있습니다.</p>
   </section>
 
   <section class="card" aria-labelledby="t2">
@@ -91,7 +117,7 @@
 (() => {
   const fmt = (n) => Math.round(n).toLocaleString('ko-KR');
   const fmtE = (n) => String(Math.round(n * 10) / 10);
-  const heads = Array.from(document.querySelectorAll('th'));
+  const heads = Array.from(document.querySelectorAll('#margin-table th'));
   const tbody = document.getElementById('rows');
   const state = document.getElementById('state');
   let data = [];
@@ -121,6 +147,7 @@
       a.textContent = r.item; a.href = r.link; a.target = '_blank'; a.rel = 'noopener noreferrer';
       first.appendChild(a); tr.appendChild(first);
       td(tr, r.place, 'nar');
+      td(tr, r.usage || '', 'use');
       td(tr, fmt(r.cost), 'num');
       td(tr, fmtE(r.expected), 'num nar');
       td(tr, fmt(r.price), 'num');
@@ -134,7 +161,7 @@
 
   heads.forEach((th) => th.querySelector('button').addEventListener('click', () => {
     const k = th.dataset.k;
-    if (key === k) dir = -dir; else { key = k; dir = ['item', 'place', 'note'].includes(k) ? 1 : -1; }
+    if (key === k) dir = -dir; else { key = k; dir = ['item', 'place', 'usage', 'note'].includes(k) ? 1 : -1; }
     render();
   }));
 
