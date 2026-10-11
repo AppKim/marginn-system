@@ -9,6 +9,11 @@
 3. 개당 최저가에 획득기대값을 곱하고 채집비용을 빼서 마진을 계산합니다.
 4. 결과를 `data/`에 저장하고 커밋합니다.
 
+## 웹페이지
+
+매일 시세를 저장한 뒤 `site/index.html`과 `data/margin.json`을 GitHub Pages에 올립니다.
+주소는 https://appkim.github.io/marginn-system/ 이며, 저장소 설정의 Pages에서 Source를 `GitHub Actions`로 바꿔 두어야 합니다.
+
 ## 파일
 
 | 경로 | 내용 |

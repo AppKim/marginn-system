@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # Actions 탭에서 직접 실행
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: daily-crawl
@@ -16,6 +16,8 @@ jobs:
   crawl:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -47,3 +49,35 @@ jobs:
             git commit -m "시세 갱신 $(TZ=Asia/Seoul date +%F)"
             git push
           fi
+
+  # 시세를 읽어 저장한 뒤 웹페이지를 GitHub Pages에 올린다.
+  # 저장소 설정 > Pages > Source 를 'GitHub Actions'로 바꿔 두어야 한다.
+  deploy:
+    needs: crawl
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main # 방금 저장한 최신 데이터를 받는다
+
+      - name: 사이트 파일 모으기
+        run: |
+          mkdir _site
+          cp site/index.html _site/index.html
+          cp data/margin.json _site/margin.json
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
