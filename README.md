@@ -4,7 +4,7 @@
 
 ## 동작
 
-1. 매일 06:00(한국 시간)에 GitHub Actions가 `crawler/crawl.mjs`를 실행합니다.
+1. 매일 06:00, 12:00, 20:00(한국 시간)에 GitHub Actions가 `crawler/crawl.mjs`를 실행합니다.
 2. 브라우저(Playwright)로 [거리니 육의전](https://gerinee.com/trade?server=3)을 열어 세션을 받은 뒤, 페이지가 쓰는 것과 같은 요청으로 아이템별 매물을 가격 낮은 순으로 읽습니다.
 3. 개당 최저가에 획득기대값을 곱하고 채집비용을 빼서 마진을 계산합니다.
 4. 결과를 `data/`에 저장하고 커밋합니다.
