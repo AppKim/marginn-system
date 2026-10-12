@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { findListings, summarize, expectedCount, buildRows, kstStamp, itemLink } from '../crawler/lib.mjs';
 
-const config = JSON.parse(fs.readFileSync(new URL('../config/items.json', import.meta.url), 'utf8'));
+const config = { ...JSON.parse(fs.readFileSync(new URL('../config/items.json', import.meta.url), 'utf8')), multiplierPercent: 15 }; // 시트에서 확인한 15% 기준 값으로 계산을 검증한다
 
 test('획득기대값은 총 배율을 적용하고 소수 둘째 자리까지 본다', () => {
   assert.equal(expectedCount(40, 15), 46);

@@ -1,7 +1,7 @@
 {
   "server": 3,
   "serverName": "현무",
-  "multiplierPercent": 15,
+  "multiplierPercent": 0,
   "items": [
     {
       "name": "금은화",
