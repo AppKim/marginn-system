@@ -137,10 +137,26 @@ export function buildRows(config, prices, freshNames, stamp) {
       margin: revenue - cost,
       verified: verified ? 'Y' : 'N',
       note: notes.join('. '),
+      depth: prices[first.name]?.depthPrice ?? prices[first.name]?.price ?? 0,
       usage: first.usage ?? '',
       link: itemLink(first.name, server),
       fetched_at: stamp,
     });
   }
   return rows;
+}
+
+/**
+ * 갱신할 때마다 시세 기록을 한 줄씩 쌓는다. 이번에 못 읽어 전날 값을 쓴 행(verified N)은 기록하지 않는다.
+ * 항목: { t: '2026-10-15 17:27', i: 이름, p: 최저가, d: 물량 기준 가격, m: 마진 }
+ */
+export function appendSeries(series, rows, stamp) {
+  const t = stamp.replace(' KST', '');
+  const seen = new Set(series.map((e) => `${e.t}|${e.i}`));
+  const out = series.slice();
+  for (const r of rows) {
+    if (r.verified !== 'Y' || seen.has(`${t}|${r.item}`)) continue;
+    out.push({ t, i: r.item, p: r.price, d: r.depth ?? r.price, m: r.margin });
+  }
+  return out;
 }

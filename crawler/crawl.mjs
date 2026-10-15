@@ -3,7 +3,7 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { findListings, summarize, expectedCount, buildRows, kstStamp, kstDate } from './lib.mjs';
+import { findListings, summarize, expectedCount, buildRows, appendSeries, kstStamp, kstDate } from './lib.mjs';
 
 const BASE = (process.env.GERINEE_BASE || 'https://gerinee.com').replace(/\/$/, '');
 const DATA_DIR = process.env.DATA_DIR || 'data';
@@ -107,4 +107,7 @@ await writeJson(path.join(DATA_DIR, 'prices.json'), { fetchedAt: now.toISOString
 await writeJson(path.join(DATA_DIR, 'latest.json'), { fetchedAt: now.toISOString(), fetchedAtKst: stamp, server, rows, errors });
 await writeJson(path.join(DATA_DIR, 'margin.json'), rows);
 await writeJson(path.join(DATA_DIR, 'history', `${kstDate(now)}.json`), rows);
+let oldSeries = [];
+try { oldSeries = JSON.parse(await fs.readFile(path.join(DATA_DIR, 'series.json'), 'utf8')); } catch { /* 처음이면 빈 기록에서 시작 */ }
+await writeJson(path.join(DATA_DIR, 'series.json'), appendSeries(oldSeries, rows, stamp));
 console.log(`완료: ${fresh.size}개 읽음, ${errors.length}개 실패`);

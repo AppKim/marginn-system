@@ -7,11 +7,11 @@
 <style>
   :root {
     --bg: #fbfaf8; --panel: #ffffff; --fg: #1d1c1a; --muted: #6d6a64; --line: #e4e1da;
-    --bar: #3d6fb6; --warn: #a15c00; --bad: #b3261e;
+    --bar: #3d6fb6; --warn: #a15c00; --bad: #b3261e; --good: #1f7a4d;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #151413; --panel: #1d1c1a; --fg: #efede8; --muted: #a3a09a; --line: #34322e; --bar: #7aa7e6; --warn: #e0a24a; --bad: #f08a80; color-scheme: dark; }
+    :root { --bg: #151413; --panel: #1d1c1a; --fg: #efede8; --muted: #a3a09a; --line: #34322e; --bar: #7aa7e6; --warn: #e0a24a; --bad: #f08a80; --good: #6fcf9f; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
@@ -40,6 +40,22 @@
   tr.warn td:first-child { box-shadow: inset 3px 0 0 var(--warn); }
   .state { color: var(--muted); padding: 1rem 0; }
   ol { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+  .tools { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  .tools select, .seg button { font: inherit; font-size: 0.875rem; padding: 0.35rem 0.6rem; border: 1px solid var(--line); background: var(--bg); color: var(--fg); }
+  .tools select { border-radius: 6px; }
+  .seg { display: flex; } .seg button { border-radius: 0; cursor: pointer; margin-left: -1px; }
+  .seg button:first-child { border-radius: 6px 0 0 6px; margin-left: 0; } .seg button:last-child { border-radius: 0 6px 6px 0; }
+  .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.75rem; }
+  .stat { display: grid; gap: 0.1rem; } .stat b { font-size: 1.25rem; font-variant-numeric: tabular-nums; } .stat span { color: var(--muted); font-size: 0.8125rem; }
+  .readout { min-height: 1.5rem; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+  #chart { width: 100%; height: auto; display: block; touch-action: pan-y; }
+  .legend { display: flex; gap: 1rem; color: var(--muted); font-size: 0.8125rem; }
+  .legend i { display: inline-block; width: 1.4rem; border-top: 2px solid var(--bar); vertical-align: middle; margin-right: 0.35rem; }
+  .legend i.d { border-top: 2px dashed var(--warn); }
+  #cmp-table tbody tr { cursor: pointer; }
+  #cmp-table tr.sel td { background: color-mix(in srgb, var(--bar) 8%, transparent); }
+  .up { color: var(--bad); } .down { color: var(--good); }
   .lockbox { max-width: 22rem; margin: 4rem auto 0; }
   .lockbox input { font: inherit; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
   .lockbox button { font: inherit; padding: 0.5rem; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); cursor: pointer; }
@@ -100,6 +116,38 @@
       </table>
     </div>
     <div class="state" id="state">불러오는 중</div>
+  </section>
+
+  <section class="card" aria-labelledby="c1" id="trend" hidden>
+    <h2 id="c1">시세 추이</h2>
+    <div class="tools">
+      <label>아이템 <select id="t-item"></select></label>
+      <div class="seg" role="group" aria-label="기간">
+        <button type="button" data-d="7">7일</button>
+        <button type="button" data-d="30" aria-pressed="true">30일</button>
+        <button type="button" data-d="0">전체</button>
+      </div>
+      <div class="seg" role="group" aria-label="보는 값">
+        <button type="button" data-m="p" aria-pressed="true">개당 시세</button>
+        <button type="button" data-m="m">마진</button>
+      </div>
+    </div>
+    <div class="stats" id="t-stats"></div>
+    <div class="readout" id="t-read"></div>
+    <svg id="chart" viewBox="0 0 720 280" role="img" aria-label="시세 추이 그래프"></svg>
+    <div class="legend"><span><i></i>최저가</span><span><i class="d"></i>물량 기준 가격</span></div>
+    <p class="note">갱신할 때마다 기록한 값입니다. 기록은 2026-10-12부터 쌓았습니다.</p>
+  </section>
+
+  <section class="card" aria-labelledby="c2" id="cmp" hidden>
+    <div>
+      <h2 id="c2">지금 시세는 평소보다 싼가 비싼가</h2>
+      <p class="note">최근 7일 평균과 비교한 값입니다. 행을 누르면 위 그래프가 그 아이템으로 바뀝니다.</p>
+    </div>
+    <div class="scroll"><table id="cmp-table">
+      <thead><tr><th>아이템</th><th class="num">현재 시세</th><th class="num">7일 평균</th><th class="num">평균 대비</th><th class="num">30일 최저</th><th class="num">30일 최고</th><th>최근 30일</th></tr></thead>
+      <tbody id="cmp-rows"></tbody>
+    </table></div>
   </section>
 
   <section class="card" aria-labelledby="t3">
@@ -189,7 +237,109 @@
     render();
   }));
 
-  const show = (rows) => {
+
+  // ---- 과거 시세 ----
+  const $ = (id) => document.getElementById(id);
+  const DAY = 86400000;
+  let S = {}, names = [], tItem = '', tDays = 30, tMetric = 'p', view = [];
+  const toDate = (t) => new Date(t.replace(' ', 'T') + ':00+09:00');
+  const md = (d) => (d.getMonth() + 1) + '/' + d.getDate();
+  const avg = (a) => a.reduce((x, y) => x + y, 0) / a.length;
+  const last = (arr, days) => { if (!arr.length) return []; const ref = arr[arr.length - 1].t.getTime(); return days ? arr.filter((e) => e.t.getTime() >= ref - days * DAY) : arr; };
+  const pct = (d) => (d > 0 ? '+' : '') + d.toFixed(1) + '%';
+  const cls = (d) => (d > 3 ? 'up' : d < -3 ? 'down' : '');
+
+  const spark = (pts, w, h) => {
+    if (pts.length < 2) return '';
+    const v = pts.map((x) => x.p), lo = Math.min(...v), hi = Math.max(...v), t0 = pts[0].t.getTime(), t1 = pts[pts.length - 1].t.getTime();
+    const d = pts.map((x) => ((x.t.getTime() - t0) / (t1 - t0) * w).toFixed(1) + ',' + (h - 2 - (x.p - lo) / ((hi - lo) || 1) * (h - 4)).toFixed(1)).join(' ');
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true"><polyline points="' + d + '" fill="none" stroke="var(--bar)" stroke-width="1.5"/></svg>';
+  };
+
+  const drawCmp = () => {
+    const body = $('cmp-rows'); body.textContent = '';
+    for (const n of names) {
+      const all = S[n] || [], p30 = last(all, 30), p7 = last(all, 7), tr = document.createElement('tr');
+      tr.dataset.i = n; if (n === tItem) tr.className = 'sel';
+      const cur = all.length ? all[all.length - 1].p : null;
+      td(tr, n); td(tr, cur === null ? '-' : fmt(cur), 'num');
+      if (p7.length >= 2 && cur !== null) { const a = avg(p7.map((e) => e.p)), d = (cur / a - 1) * 100; td(tr, fmt(a), 'num'); td(tr, pct(d), 'num ' + cls(d)); }
+      else { td(tr, '-', 'num'); td(tr, '-', 'num'); }
+      td(tr, p30.length ? fmt(Math.min(...p30.map((e) => e.p))) : '-', 'num');
+      td(tr, p30.length ? fmt(Math.max(...p30.map((e) => e.p))) : '-', 'num');
+      const c = td(tr, ''); c.innerHTML = spark(p30, 110, 28);
+      body.appendChild(tr);
+    }
+  };
+
+  const W = 720, H = 280, L = 62, R = 12, T = 12, B = 28;
+  let geo = null;
+  const drawChart = () => {
+    const pts = view = last(S[tItem] || [], tDays), svg = $('chart');
+    $('t-read').textContent = '';
+    if (pts.length < 2) {
+      svg.innerHTML = '<text x="360" y="140" text-anchor="middle" font-size="14" fill="var(--muted)">기록이 아직 부족합니다. 갱신이 쌓이면 그래프가 나옵니다.</text>';
+      $('t-stats').innerHTML = ''; geo = null; return;
+    }
+    const vals = pts.map((e) => e[tMetric]), dv = tMetric === 'p' ? pts.map((e) => e.d) : [];
+    const lo0 = Math.min(...vals, ...dv), hi0 = Math.max(...vals, ...dv), pad = (hi0 - lo0) * 0.08 || Math.max(1, hi0 * 0.05);
+    const lo = lo0 - pad, hi = hi0 + pad, t0 = pts[0].t.getTime(), t1 = pts[pts.length - 1].t.getTime();
+    const X = (t) => L + (t - t0) / (t1 - t0) * (W - L - R), Y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+    geo = { X, Y, t0, t1, L, R, W, H, T, B };
+    let g = '';
+    for (let k = 0; k <= 4; k++) { const v = lo + (hi - lo) * k / 4, y = Y(v); g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)"/><text x="' + (L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + fmt(v) + '</text>'; }
+    for (let k = 0; k < 5; k++) { const t = t0 + (t1 - t0) * k / 4; g += '<text x="' + X(t) + '" y="' + (H - 8) + '" text-anchor="' + (k === 0 ? 'start' : k === 4 ? 'end' : 'middle') + '" font-size="11" fill="var(--muted)">' + md(new Date(t)) + '</text>'; }
+    const line = (arr, extra) => '<polyline fill="none" stroke-width="2" ' + extra + ' points="' + arr.map((v, i) => X(pts[i].t.getTime()).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
+    g += line(vals, 'stroke="var(--bar)"');
+    if (dv.length) g += line(dv, 'stroke="var(--warn)" stroke-dasharray="5 4"');
+    g += '<line id="t-cur" y1="' + T + '" y2="' + (H - B) + '" stroke="var(--muted)" stroke-dasharray="2 3" visibility="hidden"/><circle id="t-dot" r="4" fill="var(--bar)" visibility="hidden"/>';
+    svg.innerHTML = g;
+
+    const ps = pts.map((e) => e.p), now = ps[ps.length - 1], p7 = last(S[tItem], 7);
+    let diff = '<div class="stat"><b>-</b><span>7일 평균 대비</span></div>';
+    if (p7.length >= 2) { const d = (now / avg(p7.map((e) => e.p)) - 1) * 100; diff = '<div class="stat"><b class="' + cls(d) + '">' + pct(d) + '</b><span>7일 평균 대비</span></div>'; }
+    $('t-stats').innerHTML = '<div class="stat"><b>' + fmt(now) + '</b><span>현재 개당 시세</span></div>' + diff +
+      '<div class="stat"><b>' + fmt(Math.min(...ps)) + '</b><span>기간 최저</span></div><div class="stat"><b>' + fmt(Math.max(...ps)) + '</b><span>기간 최고</span></div>';
+    $('t-read').textContent = '그래프 위에 손가락이나 마우스를 올려 보세요';
+  };
+
+  const hover = (e) => {
+    if (!geo || !view.length) return;
+    const svg = $('chart'), r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * geo.W;
+    const t = geo.t0 + (x - geo.L) / (geo.W - geo.L - geo.R) * (geo.t1 - geo.t0);
+    let p = view[0]; for (const q of view) if (Math.abs(q.t.getTime() - t) < Math.abs(p.t.getTime() - t)) p = q;
+    const px = geo.X(p.t.getTime()), py = geo.Y(p[tMetric]), c = $('t-cur'), d = $('t-dot'); if (!c) return;
+    c.setAttribute('x1', px); c.setAttribute('x2', px); c.setAttribute('visibility', 'visible');
+    d.setAttribute('cx', px); d.setAttribute('cy', py); d.setAttribute('visibility', 'visible');
+    const hh = String(p.t.getHours()).padStart(2, '0'), mm = String(p.t.getMinutes()).padStart(2, '0');
+    $('t-read').textContent = md(p.t) + ' ' + hh + ':' + mm + '  ' + (tMetric === 'p' ? '최저가 ' + fmt(p.p) + ' · 물량 기준 ' + fmt(p.d) : '마진 ' + fmt(p.m));
+  };
+
+  const redraw = () => { drawChart(); drawCmp(); };
+  let trendReady = false;
+  const initTrend = (rows, series) => {
+    S = {}; for (const e of series) (S[e.i] = S[e.i] || []).push({ t: toDate(e.t), p: e.p, d: e.d, m: e.m });
+    for (const n in S) S[n].sort((a, b) => a.t - b.t);
+    names = rows.slice().sort((a, b) => b.margin - a.margin).map((r) => r.item);
+    if (!names.length) return;
+    tItem = names[0];
+    const sel = $('t-item'); sel.textContent = '';
+    for (const n of names) { const o = document.createElement('option'); o.textContent = n; sel.appendChild(o); }
+    sel.value = tItem;
+    $('trend').hidden = false; $('cmp').hidden = false;
+    if (!trendReady) {
+      trendReady = true;
+      sel.addEventListener('change', (e) => { tItem = e.target.value; redraw(); });
+      document.querySelectorAll('[data-d]').forEach((b) => b.addEventListener('click', () => { tDays = +b.dataset.d; document.querySelectorAll('[data-d]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); redraw(); }));
+      document.querySelectorAll('[data-m]').forEach((b) => b.addEventListener('click', () => { tMetric = b.dataset.m; document.querySelectorAll('[data-m]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); redraw(); }));
+      $('cmp-rows').addEventListener('click', (e) => { const tr = e.target.closest('tr'); if (tr) { tItem = tr.dataset.i; $('t-item').value = tItem; redraw(); $('trend').scrollIntoView({ behavior: 'smooth' }); } });
+      $('chart').addEventListener('pointermove', hover); $('chart').addEventListener('pointerdown', hover);
+    }
+    redraw();
+  };
+
+  const show = (payload) => {
+    const rows = payload.rows;
     data = rows;
     state.hidden = true;
     const top = rows.filter((r) => r.verified === 'Y').sort((a, b) => b.margin - a.margin).slice(0, 3);
@@ -199,6 +349,7 @@
     }
     document.getElementById('meta').textContent = `시세 확인 ${rows[0]?.fetched_at ?? '-'} · 금액 단위는 냥 · 시세는 거리니 육의전 기준`;
     render();
+    initTrend(rows, payload.series || []);
   };
 
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
@@ -206,7 +357,8 @@
     const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
     const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(box.salt), iterations: box.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
     const buf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(box.iv) }, key, b64(box.data));
-    return JSON.parse(new TextDecoder().decode(buf));
+    const out = JSON.parse(new TextDecoder().decode(buf));
+    return Array.isArray(out) ? { rows: out, series: [] } : out;
   };
 
   const lock = document.getElementById('lock');
@@ -221,10 +373,10 @@
 
   const unlock = async (pw, silent) => {
     try {
-      const rows = await decrypt(box, pw);
+      const payload = await decrypt(box, pw);
       store.set(pw);
       lock.hidden = true; app.hidden = false;
-      show(rows);
+      show(payload);
     } catch {
       store.del();
       lock.hidden = false; app.hidden = true;

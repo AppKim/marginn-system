@@ -14,12 +14,14 @@ export function encryptJson(text, password) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const [src, dst] = process.argv.slice(2);
+  const [dataDir, dst] = process.argv.slice(2);
   const password = process.env.SITE_PASSWORD;
   if (!password) {
     console.error('SITE_PASSWORD 비밀값이 없습니다. 저장소 Settings → Secrets and variables → Actions에서 추가하세요.');
     process.exit(1);
   }
-  fs.writeFileSync(dst, JSON.stringify(encryptJson(fs.readFileSync(src, 'utf8'), password)));
-  console.log(`암호화 완료: ${dst}`);
+  const read = (f, fallback) => { try { return JSON.parse(fs.readFileSync(`${dataDir}/${f}`, 'utf8')); } catch { return fallback; } };
+  const payload = { rows: read('margin.json', []), series: read('series.json', []) };
+  fs.writeFileSync(dst, JSON.stringify(encryptJson(JSON.stringify(payload), password)));
+  console.log(`암호화 완료: ${dst} (현재 ${payload.rows.length}행, 기록 ${payload.series.length}건)`);
 }

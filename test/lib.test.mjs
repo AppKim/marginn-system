@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { findListings, summarize, expectedCount, buildRows, kstStamp, itemLink } from '../crawler/lib.mjs';
+import { findListings, summarize, expectedCount, buildRows, appendSeries, kstStamp, itemLink } from '../crawler/lib.mjs';
 
 const config = { ...JSON.parse(fs.readFileSync(new URL('../config/items.json', import.meta.url), 'utf8')), multiplierPercent: 15 }; // 시트에서 확인한 15% 기준 값으로 계산을 검증한다
 
@@ -101,4 +101,15 @@ test('buildRows: 시세를 한 번도 못 읽은 아이템은 표에서 뺀다',
   const rows = buildRows(config, partial, new Set(Object.keys(partial)), stamp);
   assert.equal(rows.some((r) => r.item === '백련초'), false);
   assert.equal(rows.length, 12);
+});
+
+test('appendSeries: 확인된 행만 쌓고 같은 시각은 두 번 넣지 않는다', () => {
+  const fresh = new Set(Object.keys(all));
+  fresh.delete('태양초');
+  const rows = buildRows(config, all, fresh, stamp);
+  const once = appendSeries([], rows, stamp);
+  assert.equal(once.length, 12); // 화염초 + 태양초(미확인) 제외
+  assert.deepEqual(once.find((e) => e.i === '금은화'), { t: '2026-10-12 06:00', i: '금은화', p: 38000, d: 48000, m: rows.find((r) => r.item === '금은화').margin });
+  assert.equal(appendSeries(once, rows, stamp).length, 12);
+  assert.equal(appendSeries(once, rows, '2026-10-12 12:00 KST').length, 24);
 });
