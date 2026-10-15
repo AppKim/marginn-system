@@ -154,13 +154,14 @@
       <div class="seg" role="group" aria-label="보는 값">
         <button type="button" data-m="p" aria-pressed="true">개당 시세</button>
         <button type="button" data-m="m">마진</button>
+        <button type="button" data-m="r">마진율</button>
       </div>
     </div>
     <div class="stats" id="t-stats"></div>
     <div class="readout" id="t-read"></div>
     <svg id="chart" viewBox="0 0 720 280" role="img" aria-label="시세 추이 그래프"></svg>
-    <div class="legend"><span><i></i>최저가</span><span><i class="d"></i>물량 기준 가격</span></div>
-    <p class="note">갱신할 때마다 기록한 값입니다. 기록은 2026-10-12부터 쌓았습니다.</p>
+    <div class="legend"><span><i></i><b id="lg-main" style="font-weight:400">최저가</b></span><span id="lg-depth"><i class="d"></i>물량 기준 가격</span></div>
+    <p class="note">갱신할 때마다 기록한 값입니다. 기록은 2026-10-12부터 쌓았습니다. 마진율은 마진 ÷ 예상 판매가입니다.</p>
   </section>
 
   <section class="card" aria-labelledby="c2" id="cmp" hidden>
@@ -169,7 +170,7 @@
       <p class="note">최근 7일 평균과 비교한 값입니다. 행을 누르면 위 그래프가 그 아이템으로 바뀝니다.</p>
     </div>
     <div class="scroll"><table id="cmp-table">
-      <thead><tr><th>아이템</th><th class="num">현재 시세</th><th class="num">7일 평균</th><th class="num">평균 대비</th><th class="num">30일 최저</th><th class="num">30일 최고</th><th>최근 30일</th></tr></thead>
+      <thead><tr><th>아이템</th><th class="num">현재 시세</th><th class="num">7일 평균</th><th class="num">평균 대비</th><th class="num">마진율</th><th class="num">마진율 변화</th><th class="num">30일 최저</th><th class="num">30일 최고</th><th>최근 30일</th></tr></thead>
       <tbody id="cmp-rows"></tbody>
     </table></div>
   </section>
@@ -301,6 +302,9 @@
       td(tr, n); td(tr, cur === null ? '-' : fmt(cur), 'num');
       if (p7.length >= 2 && cur !== null) { const a = avg(p7.map((e) => e.p)), d = (cur / a - 1) * 100; td(tr, fmt(a), 'num'); td(tr, pct(d), 'num ' + cls(d)); }
       else { td(tr, '-', 'num'); td(tr, '-', 'num'); }
+      td(tr, all.length ? all[all.length - 1].r.toFixed(1) + '%' : '-', 'num');
+      if (p7.length >= 2) { const d = all[all.length - 1].r - avg(p7.map((e) => e.r)); td(tr, (d > 0 ? '+' : '') + d.toFixed(1) + '%p', 'num ' + (d > 1 ? 'down' : d < -1 ? 'up' : '')); }
+      else td(tr, '-', 'num');
       td(tr, p30.length ? fmt(Math.min(...p30.map((e) => e.p))) : '-', 'num');
       td(tr, p30.length ? fmt(Math.max(...p30.map((e) => e.p))) : '-', 'num');
       const c = td(tr, ''); c.innerHTML = spark(p30, 110, 28);
@@ -317,13 +321,16 @@
       svg.innerHTML = '<text x="360" y="140" text-anchor="middle" font-size="14" fill="var(--muted)">기록이 아직 부족합니다. 갱신이 쌓이면 그래프가 나옵니다.</text>';
       $('t-stats').innerHTML = ''; geo = null; return;
     }
+    const F = tMetric === 'r' ? (v) => v.toFixed(1) + '%' : fmt;
+    $('lg-main').textContent = { p: '최저가', m: '마진', r: '마진율' }[tMetric];
+    $('lg-depth').hidden = tMetric !== 'p';
     const vals = pts.map((e) => e[tMetric]), dv = tMetric === 'p' ? pts.map((e) => e.d) : [];
     const lo0 = Math.min(...vals, ...dv), hi0 = Math.max(...vals, ...dv), pad = (hi0 - lo0) * 0.08 || Math.max(1, hi0 * 0.05);
     const lo = lo0 - pad, hi = hi0 + pad, t0 = pts[0].t.getTime(), t1 = pts[pts.length - 1].t.getTime();
     const X = (t) => L + (t - t0) / (t1 - t0) * (W - L - R), Y = (v) => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
     geo = { X, Y, t0, t1, L, R, W, H, T, B };
     let g = '';
-    for (let k = 0; k <= 4; k++) { const v = lo + (hi - lo) * k / 4, y = Y(v); g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)"/><text x="' + (L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + fmt(v) + '</text>'; }
+    for (let k = 0; k <= 4; k++) { const v = lo + (hi - lo) * k / 4, y = Y(v); g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)"/><text x="' + (L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + F(v) + '</text>'; }
     for (let k = 0; k < 5; k++) { const t = t0 + (t1 - t0) * k / 4; g += '<text x="' + X(t) + '" y="' + (H - 8) + '" text-anchor="' + (k === 0 ? 'start' : k === 4 ? 'end' : 'middle') + '" font-size="11" fill="var(--muted)">' + md(new Date(t)) + '</text>'; }
     const line = (arr, extra) => '<polyline fill="none" stroke-width="2" ' + extra + ' points="' + arr.map((v, i) => X(pts[i].t.getTime()).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
     g += line(vals, 'class="draw" stroke="var(--bar)"');
@@ -332,11 +339,17 @@
     svg.innerHTML = g;
     svg.querySelectorAll('.draw').forEach((el) => { try { el.style.setProperty('--len', String(Math.ceil(el.getTotalLength()))); } catch { /* 길이를 못 재면 그냥 보여 준다 */ } });
 
-    const ps = pts.map((e) => e.p), now = ps[ps.length - 1], p7 = last(S[tItem], 7);
-    let diff = '<div class="stat"><b>-</b><span>7일 평균 대비</span></div>';
-    if (p7.length >= 2) { const d = (now / avg(p7.map((e) => e.p)) - 1) * 100; diff = '<div class="stat"><b class="' + cls(d) + '">' + pct(d) + '</b><span>7일 평균 대비</span></div>'; }
-    $('t-stats').innerHTML = '<div class="stat"><b data-n="' + now + '">' + fmt(now) + '</b><span>현재 개당 시세</span></div>' + diff +
-      '<div class="stat"><b data-n="' + Math.min(...ps) + '">' + fmt(Math.min(...ps)) + '</b><span>기간 최저</span></div><div class="stat"><b data-n="' + Math.max(...ps) + '">' + fmt(Math.max(...ps)) + '</b><span>기간 최고</span></div>';
+    const key = tMetric, isR = key === 'r', ps = pts.map((e) => e[key]), now = ps[ps.length - 1], p7 = last(S[tItem], 7);
+    const cu = (v) => (isR ? ' ' : ' data-n="' + v + '" ');
+    const names = { p: '현재 개당 시세', m: '현재 마진', r: '현재 마진율' };
+    let diff = '<div class="stat"><b>-</b><span>' + (isR ? '7일 평균 대비 변화' : '7일 평균 대비') + '</span></div>';
+    if (p7.length >= 2) {
+      const a7 = avg(p7.map((e) => e[key]));
+      if (isR) { const d = now - a7; diff = '<div class="stat"><b class="' + (d > 1 ? 'down' : d < -1 ? 'up' : '') + '">' + (d > 0 ? '+' : '') + d.toFixed(1) + '%p</b><span>7일 평균 대비 변화</span></div>'; }
+      else { const d = (now / a7 - 1) * 100; diff = '<div class="stat"><b class="' + (key === 'm' ? (d > 3 ? 'down' : d < -3 ? 'up' : '') : cls(d)) + '">' + pct(d) + '</b><span>7일 평균 대비</span></div>'; }
+    }
+    $('t-stats').innerHTML = '<div class="stat"><b' + cu(now) + '>' + F(now) + '</b><span>' + names[key] + '</span></div>' + diff +
+      '<div class="stat"><b' + cu(Math.min(...ps)) + '>' + F(Math.min(...ps)) + '</b><span>기간 최저</span></div><div class="stat"><b' + cu(Math.max(...ps)) + '>' + F(Math.max(...ps)) + '</b><span>기간 최고</span></div>';
     $('t-read').textContent = '그래프 위에 손가락이나 마우스를 올려 보세요';
     document.querySelectorAll('#t-stats b[data-n]').forEach(countUp);
   };
@@ -350,13 +363,14 @@
     c.setAttribute('x1', px); c.setAttribute('x2', px); c.setAttribute('visibility', 'visible');
     d.setAttribute('cx', px); d.setAttribute('cy', py); d.setAttribute('visibility', 'visible');
     const hh = String(p.t.getHours()).padStart(2, '0'), mm = String(p.t.getMinutes()).padStart(2, '0');
-    $('t-read').textContent = md(p.t) + ' ' + hh + ':' + mm + '  ' + (tMetric === 'p' ? '최저가 ' + fmt(p.p) + ' · 물량 기준 ' + fmt(p.d) : '마진 ' + fmt(p.m));
+    $('t-read').textContent = md(p.t) + ' ' + hh + ':' + mm + '  ' + (tMetric === 'p' ? '최저가 ' + fmt(p.p) + ' · 물량 기준 ' + fmt(p.d) : '마진 ' + fmt(p.m) + ' · 마진율 ' + p.r.toFixed(1) + '%');
   };
 
   const redraw = () => { drawChart(); drawCmp(); };
   let trendReady = false;
   const initTrend = (rows, series) => {
-    S = {}; for (const e of series) (S[e.i] = S[e.i] || []).push({ t: toDate(e.t), p: e.p, d: e.d, m: e.m });
+    const cost = Object.fromEntries(rows.map((r) => [r.item, r.cost]));
+    S = {}; for (const e of series) (S[e.i] = S[e.i] || []).push({ t: toDate(e.t), p: e.p, d: e.d, m: e.m, r: e.m + (cost[e.i] ?? 0) > 0 ? e.m / (e.m + (cost[e.i] ?? 0)) * 100 : 0 });
     for (const n in S) S[n].sort((a, b) => a.t - b.t);
     names = rows.slice().sort((a, b) => b.margin - a.margin).map((r) => r.item);
     if (!names.length) return;
