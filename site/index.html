@@ -56,6 +56,30 @@
   #cmp-table tbody tr { cursor: pointer; }
   #cmp-table tr.sel td { background: color-mix(in srgb, var(--bar) 8%, transparent); }
   .up { color: var(--bad); } .down { color: var(--good); }
+  @property --w { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes grow { from { --w: 0%; } }
+  @keyframes draw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes pop { from { opacity: 0; transform: scale(0.96); } }
+  .card { animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  #app > .card:nth-of-type(2), #trend { animation-delay: 0.08s; }
+  #cmp { animation-delay: 0.16s; }
+  .lockbox { animation: pop 0.35s ease-out both; }
+  tr.in { animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 35ms + 0.15s); }
+  tr.in td.bar { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 35ms + 0.3s); }
+  #chart .draw { stroke-dasharray: var(--len); animation: draw 0.9s cubic-bezier(0.3, 0.6, 0.2, 1) both; }
+  #chart .fade { animation: fade 0.7s ease-out 0.4s both; }
+  .stat b { transition: color 0.2s; }
+  th button, td a { transition: color 0.15s, text-decoration-color 0.15s; }
+  td a:hover { text-decoration-color: currentColor; }
+  tbody tr { transition: background-color 0.15s; }
+  tbody tr:hover td:not(.bar) { background: color-mix(in srgb, var(--fg) 4%, transparent); }
+  .tools select, .seg button { transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
+  .seg button:not([aria-pressed="true"]):hover { background: color-mix(in srgb, var(--fg) 8%, var(--bg)); }
+  .lockbox button { transition: opacity 0.15s, transform 0.1s; }
+  .lockbox button:hover { opacity: 0.88; } .lockbox button:active { transform: scale(0.98); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   .lockbox { max-width: 22rem; margin: 4rem auto 0; }
   .lockbox input { font: inherit; padding: 0.5rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); }
   .lockbox button { font: inherit; padding: 0.5rem; border: 0; border-radius: 6px; background: var(--fg); color: var(--bg); cursor: pointer; }
@@ -207,13 +231,17 @@
 
   const td = (tr, text, cls) => { const c = document.createElement('td'); c.textContent = text; if (cls) c.className = cls; tr.appendChild(c); return c; };
 
+  let entered = false;
   const render = () => {
     heads.forEach((th) => th.setAttribute('aria-sort', key ? (th.dataset.k === key ? (dir > 0 ? 'ascending' : 'descending') : 'none') : th.dataset.k === 'margin' ? 'descending' : 'none'));
     tbody.textContent = '';
     const max = Math.max(1, ...data.map((r) => r.margin));
+    let idx = 0;
     for (const r of ordered()) {
       const tr = document.createElement('tr');
       if (r.verified !== 'Y') tr.className = 'warn';
+      if (!entered) { tr.classList.add('in'); tr.style.setProperty('--i', String(idx)); }
+      idx += 1;
       const first = document.createElement('td');
       const a = document.createElement('a');
       a.textContent = r.item; a.href = r.link; a.target = '_blank'; a.rel = 'noopener noreferrer';
@@ -229,6 +257,7 @@
       Array.from(tr.children).forEach((c, i) => { c.dataset.label = heads[i].textContent; });
       tbody.appendChild(tr);
     }
+    entered = true;
   };
 
   heads.forEach((th) => th.querySelector('button').addEventListener('click', () => {
@@ -254,6 +283,13 @@
     const v = pts.map((x) => x.p), lo = Math.min(...v), hi = Math.max(...v), t0 = pts[0].t.getTime(), t1 = pts[pts.length - 1].t.getTime();
     const d = pts.map((x) => ((x.t.getTime() - t0) / (t1 - t0) * w).toFixed(1) + ',' + (h - 2 - (x.p - lo) / ((hi - lo) || 1) * (h - 4)).toFixed(1)).join(' ');
     return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="' + w + '" height="' + h + '" aria-hidden="true"><polyline points="' + d + '" fill="none" stroke="var(--bar)" stroke-width="1.5"/></svg>';
+  };
+
+  const countUp = (el) => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const to = Number(el.dataset.n), t0 = performance.now();
+    const step = (t) => { const k = Math.min(1, (t - t0) / 650); el.textContent = fmt(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
   };
 
   const drawCmp = () => {
@@ -290,17 +326,19 @@
     for (let k = 0; k <= 4; k++) { const v = lo + (hi - lo) * k / 4, y = Y(v); g += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="var(--line)"/><text x="' + (L - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + fmt(v) + '</text>'; }
     for (let k = 0; k < 5; k++) { const t = t0 + (t1 - t0) * k / 4; g += '<text x="' + X(t) + '" y="' + (H - 8) + '" text-anchor="' + (k === 0 ? 'start' : k === 4 ? 'end' : 'middle') + '" font-size="11" fill="var(--muted)">' + md(new Date(t)) + '</text>'; }
     const line = (arr, extra) => '<polyline fill="none" stroke-width="2" ' + extra + ' points="' + arr.map((v, i) => X(pts[i].t.getTime()).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ') + '"/>';
-    g += line(vals, 'stroke="var(--bar)"');
-    if (dv.length) g += line(dv, 'stroke="var(--warn)" stroke-dasharray="5 4"');
+    g += line(vals, 'class="draw" stroke="var(--bar)"');
+    if (dv.length) g += line(dv, 'class="fade" stroke="var(--warn)" stroke-dasharray="5 4"');
     g += '<line id="t-cur" y1="' + T + '" y2="' + (H - B) + '" stroke="var(--muted)" stroke-dasharray="2 3" visibility="hidden"/><circle id="t-dot" r="4" fill="var(--bar)" visibility="hidden"/>';
     svg.innerHTML = g;
+    svg.querySelectorAll('.draw').forEach((el) => { try { el.style.setProperty('--len', String(Math.ceil(el.getTotalLength()))); } catch { /* 길이를 못 재면 그냥 보여 준다 */ } });
 
     const ps = pts.map((e) => e.p), now = ps[ps.length - 1], p7 = last(S[tItem], 7);
     let diff = '<div class="stat"><b>-</b><span>7일 평균 대비</span></div>';
     if (p7.length >= 2) { const d = (now / avg(p7.map((e) => e.p)) - 1) * 100; diff = '<div class="stat"><b class="' + cls(d) + '">' + pct(d) + '</b><span>7일 평균 대비</span></div>'; }
-    $('t-stats').innerHTML = '<div class="stat"><b>' + fmt(now) + '</b><span>현재 개당 시세</span></div>' + diff +
-      '<div class="stat"><b>' + fmt(Math.min(...ps)) + '</b><span>기간 최저</span></div><div class="stat"><b>' + fmt(Math.max(...ps)) + '</b><span>기간 최고</span></div>';
+    $('t-stats').innerHTML = '<div class="stat"><b data-n="' + now + '">' + fmt(now) + '</b><span>현재 개당 시세</span></div>' + diff +
+      '<div class="stat"><b data-n="' + Math.min(...ps) + '">' + fmt(Math.min(...ps)) + '</b><span>기간 최저</span></div><div class="stat"><b data-n="' + Math.max(...ps) + '">' + fmt(Math.max(...ps)) + '</b><span>기간 최고</span></div>';
     $('t-read').textContent = '그래프 위에 손가락이나 마우스를 올려 보세요';
+    document.querySelectorAll('#t-stats b[data-n]').forEach(countUp);
   };
 
   const hover = (e) => {
