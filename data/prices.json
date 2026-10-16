@@ -1,89 +1,89 @@
 {
-  "fetchedAt": "2026-10-16T15:24:51.304Z",
+  "fetchedAt": "2026-10-16T15:35:26.208Z",
   "prices": {
     "금은화": {
       "price": 74000,
       "lowestQty": 368,
       "depthPrice": 74000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "백복령": {
       "price": 59999,
       "lowestQty": 88,
       "depthPrice": 59999,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "만년초": {
       "price": 75000,
       "lowestQty": 1,
       "depthPrice": 100000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "천상초": {
       "price": 135000,
       "lowestQty": 6,
       "depthPrice": 135000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "익모초": {
       "price": 93500,
       "lowestQty": 36,
       "depthPrice": 93500,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "착금감록초": {
       "price": 40000,
       "lowestQty": 150,
       "depthPrice": 40000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "설삼": {
       "price": 124000,
       "lowestQty": 4,
       "depthPrice": 125000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "바람꽃": {
       "price": 190000,
       "lowestQty": 70,
       "depthPrice": 190000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "동자삼": {
       "price": 120000,
       "lowestQty": 492,
       "depthPrice": 120000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "화염초": {
       "price": 73000,
       "lowestQty": 30,
       "depthPrice": 73000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "태양초": {
       "price": 140000,
       "lowestQty": 70,
       "depthPrice": 140000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "설련화": {
       "price": 174000,
       "lowestQty": 33,
       "depthPrice": 174000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "황금연꽃": {
       "price": 193000,
       "lowestQty": 176,
       "depthPrice": 193000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     },
     "백련초": {
       "price": 190000,
       "lowestQty": 70,
       "depthPrice": 190000,
-      "at": "2026-10-17 00:24 KST"
+      "at": "2026-10-17 00:35 KST"
     }
   }
 }
