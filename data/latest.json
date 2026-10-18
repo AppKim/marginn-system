@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-10-18T14:40:54.276Z",
-  "fetchedAtKst": "2026-10-18 23:40 KST",
+  "fetchedAt": "2026-10-18T14:52:24.757Z",
+  "fetchedAtKst": "2026-10-18 23:52 KST",
   "server": 3,
   "rows": [
     {
@@ -8,15 +8,15 @@
       "place": "륭산",
       "cost": 100000,
       "expected": 40,
-      "price": 60000,
-      "revenue": 2400000,
-      "margin": 2300000,
+      "price": 55555,
+      "revenue": 2222200,
+      "margin": 2122200,
       "verified": "Y",
       "note": "",
-      "depth": 60000,
+      "depth": 55555,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EA%B8%88%EC%9D%80%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "백복령",
@@ -31,7 +31,7 @@
       "depth": 63333,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%B3%B5%EB%A0%B9&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "만년초",
@@ -46,7 +46,7 @@
       "depth": 87000,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%A7%8C%EB%85%84%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "천상초",
@@ -61,22 +61,22 @@
       "depth": 147500,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B2%9C%EC%83%81%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "익모초",
       "place": "대관령",
       "cost": 500000,
       "expected": 30,
-      "price": 98900,
-      "revenue": 2967000,
-      "margin": 2467000,
+      "price": 97000,
+      "revenue": 2910000,
+      "margin": 2410000,
       "verified": "Y",
       "note": "",
-      "depth": 98900,
+      "depth": 97000,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%9D%B5%EB%AA%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "착금감록초",
@@ -91,7 +91,7 @@
       "depth": 35000,
       "usage": "안정제 재료 (연금술사 110레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B0%A9%EA%B8%88%EA%B0%90%EB%A1%9D%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "설삼",
@@ -106,22 +106,22 @@
       "depth": 110000,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "바람꽃",
       "place": "백호림",
       "cost": 1000000,
       "expected": 30,
-      "price": 150000,
-      "revenue": 4500000,
-      "margin": 3500000,
+      "price": 153000,
+      "revenue": 4590000,
+      "margin": 3590000,
       "verified": "Y",
       "note": "",
-      "depth": 150000,
+      "depth": 153000,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%94%EB%9E%8C%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "동자삼",
@@ -136,7 +136,7 @@
       "depth": 123000,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%8F%99%EC%9E%90%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "화염초 + 태양초",
@@ -151,22 +151,22 @@
       "depth": 64300,
       "usage": "붉은색가루 재료 (전문연금술사 150레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%94%EC%97%BC%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "설련화",
       "place": "히말라야",
       "cost": 2000000,
       "expected": 30,
-      "price": 175000,
-      "revenue": 5250000,
-      "margin": 3250000,
+      "price": 174000,
+      "revenue": 5220000,
+      "margin": 3220000,
       "verified": "Y",
       "note": "",
-      "depth": 175000,
+      "depth": 174000,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EB%A0%A8%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "황금연꽃",
@@ -181,22 +181,22 @@
       "depth": 250000,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%A9%EA%B8%88%EC%97%B0%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     },
     {
       "item": "백련초",
       "place": "사막지대",
       "cost": 2000000,
       "expected": 30,
-      "price": 178000,
-      "revenue": 5340000,
-      "margin": 3340000,
+      "price": 180000,
+      "revenue": 5400000,
+      "margin": 3400000,
       "verified": "Y",
       "note": "",
-      "depth": 178000,
+      "depth": 180000,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%A0%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-18 23:40 KST"
+      "fetched_at": "2026-10-18 23:52 KST"
     }
   ],
   "errors": [
