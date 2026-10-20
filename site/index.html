@@ -148,6 +148,22 @@
     <p class="meta" id="meta"></p>
   </header>
 
+  <section class="card" aria-labelledby="rc" id="reco" hidden>
+    <div>
+      <h2 id="rc"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="spk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ai-a)"/><stop offset="1" stop-color="var(--ai-b)"/></linearGradient></defs><path fill="url(#spk)" d="M12 2l2.2 6.3L20.5 10l-6.3 1.7L12 18l-2.2-6.3L3.5 10l6.3-1.7zM19 15l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z"/></svg>오늘의 채집 추천<span class="tag">자동 분석</span></h2>
+      <p class="note">마진, 마진율, 시세 흐름, 재고, 신뢰도를 정해 둔 점수 규칙으로 자동 계산한 순위입니다. 사람이나 AI가 직접 쓴 문장이 아니고, 앞으로의 가격을 맞히는 것도 아닙니다. 참고용으로 보세요. 카드를 누르면 아래 그래프가 그 아이템으로 바뀝니다.</p>
+    </div>
+    <ol class="reco" id="reco-top"></ol>
+    <details>
+      <summary>전체 순위와 점수 구성 보기</summary>
+      <div class="scroll"><table id="score-table">
+        <thead><tr><th>순위</th><th>아이템</th><th class="num">점수</th><th class="num">마진 (40)</th><th class="num">마진율 (15)</th><th class="num">시세 흐름 (15)</th><th class="num">재고 (15)</th><th class="num">신뢰도 (15)</th></tr></thead>
+        <tbody id="score-rows"></tbody>
+      </table></div>
+      <p class="note">재고는 가격 낮은 순 30건 매물의 수량 합계를 한 번 채집 수량으로 나눈 값으로 봅니다. 시장 전체 재고가 아니라 싼 쪽 재고입니다. 신뢰도는 최저가와, 한 번 채집한 개수를 채울 때의 가격 차이가 작을수록 높습니다.</p>
+    </details>
+  </section>
+
   <section class="card" aria-labelledby="t1">
     <div>
       <h2 id="t1">아이템별 판매 마진</h2>
@@ -171,22 +187,6 @@
       </table>
     </div>
     <div class="state" id="state">불러오는 중</div>
-  </section>
-
-  <section class="card" aria-labelledby="rc" id="reco" hidden>
-    <div>
-      <h2 id="rc"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="spk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ai-a)"/><stop offset="1" stop-color="var(--ai-b)"/></linearGradient></defs><path fill="url(#spk)" d="M12 2l2.2 6.3L20.5 10l-6.3 1.7L12 18l-2.2-6.3L3.5 10l6.3-1.7zM19 15l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z"/></svg>오늘의 채집 추천<span class="tag">자동 분석</span></h2>
-      <p class="note">마진, 마진율, 시세 흐름, 재고, 신뢰도를 정해 둔 점수 규칙으로 자동 계산한 순위입니다. 사람이나 AI가 직접 쓴 문장이 아니고, 앞으로의 가격을 맞히는 것도 아닙니다. 참고용으로 보세요. 카드를 누르면 아래 그래프가 그 아이템으로 바뀝니다.</p>
-    </div>
-    <ol class="reco" id="reco-top"></ol>
-    <details>
-      <summary>전체 순위와 점수 구성 보기</summary>
-      <div class="scroll"><table id="score-table">
-        <thead><tr><th>순위</th><th>아이템</th><th class="num">점수</th><th class="num">마진 (40)</th><th class="num">마진율 (15)</th><th class="num">시세 흐름 (15)</th><th class="num">재고 (15)</th><th class="num">신뢰도 (15)</th></tr></thead>
-        <tbody id="score-rows"></tbody>
-      </table></div>
-      <p class="note">재고는 가격 낮은 순 30건 매물의 수량 합계를 한 번 채집 수량으로 나눈 값으로 봅니다. 시장 전체 재고가 아니라 싼 쪽 재고입니다. 신뢰도는 최저가와, 한 번 채집한 개수를 채울 때의 가격 차이가 작을수록 높습니다.</p>
-    </details>
   </section>
 
   <section class="card" aria-labelledby="c1" id="trend" hidden>
