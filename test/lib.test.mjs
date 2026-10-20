@@ -32,7 +32,7 @@ test('summarize: 최저가와 물량 기준 가격', () => {
     { unitPrice: 40000, quantity: 6 },
     { unitPrice: 48000, quantity: 1932 },
   ];
-  assert.deepEqual(summarize(l, 46), { price: 38000, lowestQty: 2, depthPrice: 48000 });
+  assert.deepEqual(summarize(l, 46), { price: 38000, lowestQty: 2, depthPrice: 48000, stock: 1940, listed: 3 });
   assert.equal(summarize([{ unitPrice: 1, quantity: 5 }], 46).depthPrice, null);
   assert.equal(summarize([], 46), null);
 });
@@ -109,7 +109,7 @@ test('appendSeries: 확인된 행만 쌓고 같은 시각은 두 번 넣지 않�
   const rows = buildRows(config, all, fresh, stamp);
   const once = appendSeries([], rows, stamp);
   assert.equal(once.length, 12); // 화염초 + 태양초(미확인) 제외
-  assert.deepEqual(once.find((e) => e.i === '금은화'), { t: '2026-10-12 06:00', i: '금은화', p: 38000, d: 48000, m: rows.find((r) => r.item === '금은화').margin });
+  assert.deepEqual(once.find((e) => e.i === '금은화'), { t: '2026-10-12 06:00', i: '금은화', p: 38000, d: 48000, m: rows.find((r) => r.item === '금은화').margin, s: null });
   assert.equal(appendSeries(once, rows, stamp).length, 12);
   assert.equal(appendSeries(once, rows, '2026-10-12 12:00 KST').length, 24);
 });

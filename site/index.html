@@ -65,6 +65,19 @@
   .card { animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   #app > .card:nth-of-type(2), #trend { animation-delay: 0.08s; }
   #cmp { animation-delay: 0.16s; }
+  .reco { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .reco li { border: 1px solid var(--line); border-radius: 8px; padding: 0.85rem; display: grid; gap: 0.45rem; align-content: start; cursor: pointer; animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 80ms + 0.2s); transition: border-color 0.15s, transform 0.15s; }
+  .reco li:hover { border-color: var(--bar); transform: translateY(-2px); }
+  .reco .rk { color: var(--muted); font-size: 0.8125rem; }
+  .reco .nm { font-weight: 600; font-size: 1.125rem; }
+  .reco .sc { font-size: 1.6rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; } .reco .sc small { font-size: 0.8125rem; color: var(--muted); font-weight: 400; margin-left: 0.2rem; }
+  .reco .sub { color: var(--muted); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .chip { font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 99px; border: 1px solid var(--line); line-height: 1.5; }
+  .chip.good { color: var(--good); border-color: color-mix(in srgb, var(--good) 40%, transparent); }
+  .chip.warn { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+  details summary { cursor: pointer; color: var(--muted); font-size: 0.875rem; }
+  #score-table td, #score-table th { padding: 0.4rem 0.55rem; }
   .lockbox { animation: pop 0.35s ease-out both; }
   tr.in { animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 35ms + 0.15s); }
   tr.in td.bar { animation: grow 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 35ms + 0.3s); }
@@ -140,6 +153,22 @@
       </table>
     </div>
     <div class="state" id="state">불러오는 중</div>
+  </section>
+
+  <section class="card" aria-labelledby="rc" id="reco" hidden>
+    <div>
+      <h2 id="rc">오늘의 채집 추천</h2>
+      <p class="note">마진, 마진율, 시세 흐름, 재고, 신뢰도를 점수로 합친 순위입니다. 앞으로의 가격을 맞히는 게 아니라 지금 데이터를 정리한 것이니 참고용으로 보세요. 카드를 누르면 아래 그래프가 그 아이템으로 바뀝니다.</p>
+    </div>
+    <ol class="reco" id="reco-top"></ol>
+    <details>
+      <summary>전체 순위와 점수 구성 보기</summary>
+      <div class="scroll"><table id="score-table">
+        <thead><tr><th>순위</th><th>아이템</th><th class="num">점수</th><th class="num">마진 (40)</th><th class="num">마진율 (15)</th><th class="num">시세 흐름 (15)</th><th class="num">재고 (15)</th><th class="num">신뢰도 (15)</th></tr></thead>
+        <tbody id="score-rows"></tbody>
+      </table></div>
+      <p class="note">재고는 가격 낮은 순 30건 매물의 수량 합계를 한 번 채집 수량으로 나눈 값으로 봅니다. 시장 전체 재고가 아니라 싼 쪽 재고입니다. 신뢰도는 최저가와, 한 번 채집한 개수를 채울 때의 가격 차이가 작을수록 높습니다.</p>
+    </details>
   </section>
 
   <section class="card" aria-labelledby="c1" id="trend" hidden>
@@ -390,6 +419,35 @@
     redraw();
   };
 
+  // ---- 채집 추천 ----
+  const renderReco = (rows, series) => {
+    import('./recommend.js').then(({ recommend, WEIGHTS }) => {
+      const list = recommend(rows, series), top = $('reco-top'), body = $('score-rows');
+      top.textContent = ''; body.textContent = '';
+      list.slice(0, 3).forEach((x, i) => {
+        const li = document.createElement('li');
+        li.style.setProperty('--i', String(i));
+        li.tabIndex = 0;
+        const mk = (tag, cl, text) => { const e = document.createElement(tag); if (cl) e.className = cl; if (text !== undefined) e.textContent = text; return e; };
+        li.appendChild(mk('div', 'rk', (i + 1) + '위'));
+        li.appendChild(mk('div', 'nm', x.item));
+        const sc = mk('div', 'sc', String(x.score)); sc.appendChild(mk('small', '', '점')); li.appendChild(sc);
+        li.appendChild(mk('div', 'sub', '마진 ' + fmt(x.margin) + ' · 마진율 ' + (x.rate * 100).toFixed(0) + '%'));
+        const chips = mk('div', 'chips'); x.reasons.forEach((r) => chips.appendChild(mk('span', 'chip ' + r.tone, r.text))); li.appendChild(chips);
+        const go = () => { tItem = x.item; $('t-item').value = tItem; redraw(); $('trend').scrollIntoView({ behavior: 'smooth' }); };
+        li.addEventListener('click', go); li.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+        top.appendChild(li);
+      });
+      list.forEach((x, i) => {
+        const tr = document.createElement('tr');
+        td(tr, String(i + 1)); td(tr, x.item); td(tr, String(x.score), 'num');
+        for (const k of ['margin', 'rate', 'trend', 'stock', 'trust']) td(tr, (x.parts[k] * WEIGHTS[k]).toFixed(0), 'num');
+        body.appendChild(tr);
+      });
+      $('reco').hidden = false;
+    }).catch(() => { $('reco').hidden = true; });
+  };
+
   const show = (payload) => {
     const rows = payload.rows;
     data = rows;
@@ -402,6 +460,7 @@
     document.getElementById('meta').textContent = `시세 확인 ${rows[0]?.fetched_at ?? '-'} · 금액 단위는 냥 · 시세는 거리니 육의전 기준`;
     render();
     initTrend(rows, payload.series || []);
+    renderReco(rows, payload.series || []);
   };
 
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));

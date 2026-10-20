@@ -78,6 +78,7 @@ jobs:
         run: |
           mkdir _site
           cp site/index.html _site/index.html
+          cp site/recommend.js _site/recommend.js
 
       - name: 마진표 암호화
         env:

@@ -58,7 +58,9 @@ export function summarize(listings, expected) {
       break;
     }
   }
-  return { price: lowest.unitPrice, lowestQty: lowest.quantity, depthPrice };
+  // stock: 읽어 온 매물(가격 낮은 순 최대 30건)의 수량 합계. 시장 전체 재고가 아니라 싼 쪽 재고다.
+  const stock = listings.reduce((t, l) => t + l.quantity, 0);
+  return { price: lowest.unitPrice, lowestQty: lowest.quantity, depthPrice, stock, listed: listings.length };
 }
 
 export const round2 = (n) => Math.round(n * 100) / 100;
@@ -138,6 +140,8 @@ export function buildRows(config, prices, freshNames, stamp) {
       verified: verified ? 'Y' : 'N',
       note: notes.join('. '),
       depth: prices[first.name]?.depthPrice ?? prices[first.name]?.price ?? 0,
+      stock: prices[first.name]?.stock ?? null,
+      lowestQty: prices[first.name]?.lowestQty ?? null,
       usage: first.usage ?? '',
       link: itemLink(first.name, server),
       fetched_at: stamp,
@@ -156,7 +160,7 @@ export function appendSeries(series, rows, stamp) {
   const out = series.slice();
   for (const r of rows) {
     if (r.verified !== 'Y' || seen.has(`${t}|${r.item}`)) continue;
-    out.push({ t, i: r.item, p: r.price, d: r.depth ?? r.price, m: r.margin });
+    out.push({ t, i: r.item, p: r.price, d: r.depth ?? r.price, m: r.margin, s: r.stock ?? null });
   }
   return out;
 }
