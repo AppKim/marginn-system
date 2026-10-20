@@ -7,11 +7,11 @@
 <style>
   :root {
     --bg: #fbfaf8; --panel: #ffffff; --fg: #1d1c1a; --muted: #6d6a64; --line: #e4e1da;
-    --bar: #3d6fb6; --warn: #a15c00; --bad: #b3261e; --good: #1f7a4d;
+    --bar: #3d6fb6; --warn: #a15c00; --bad: #b3261e; --good: #1f7a4d; --ai-a: #6d5bd0; --ai-b: #2f80c9;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #151413; --panel: #1d1c1a; --fg: #efede8; --muted: #a3a09a; --line: #34322e; --bar: #7aa7e6; --warn: #e0a24a; --bad: #f08a80; --good: #6fcf9f; color-scheme: dark; }
+    :root { --bg: #151413; --panel: #1d1c1a; --fg: #efede8; --muted: #a3a09a; --line: #34322e; --bar: #7aa7e6; --warn: #e0a24a; --bad: #f08a80; --good: #6fcf9f; --ai-a: #a99bff; --ai-b: #6fb2f2; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
@@ -68,6 +68,24 @@
   .reco { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
   .reco li { border: 1px solid var(--line); border-radius: 8px; padding: 0.85rem; display: grid; gap: 0.45rem; align-content: start; cursor: pointer; animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i) * 80ms + 0.2s); transition: border-color 0.15s, transform 0.15s; }
   .reco li:hover { border-color: var(--bar); transform: translateY(-2px); }
+  @property --p { syntax: '<number>'; inherits: false; initial-value: 0; }
+  @keyframes ring { from { --p: 0; } }
+  @keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(0.8) rotate(12deg); opacity: 0.7; } }
+  @keyframes sweep { from { transform: translateX(-120%); opacity: 1; } 80% { opacity: 1; } to { transform: translateX(220%); opacity: 0; } }
+  #reco { position: relative; overflow: hidden; border-color: color-mix(in srgb, var(--ai-a) 35%, var(--line)); background: linear-gradient(180deg, color-mix(in srgb, var(--ai-a) 7%, var(--panel)), var(--panel) 9rem); }
+  #reco::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, var(--ai-a), var(--ai-b)); }
+  #reco::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 40%; background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--ai-a) 14%, transparent), transparent); animation: sweep 1.6s ease-out 0.3s 1 both; pointer-events: none; }
+  #reco h2 { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; font-size: 1.125rem; }
+  #reco h2 svg { width: 1.15rem; height: 1.15rem; animation: twinkle 3s ease-in-out infinite; }
+  .tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.02em; padding: 0.1rem 0.5rem; border-radius: 99px; color: #fff; background: linear-gradient(90deg, var(--ai-a), var(--ai-b)); }
+  :root[data-theme="dark"] .tag { color: #111; }
+  @media (prefers-color-scheme: dark) { .tag { color: #111; } }
+  .reco li { background: var(--panel); }
+  .reco li:first-child { border-color: transparent; background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(135deg, var(--ai-a), var(--ai-b)) border-box; border: 1.5px solid transparent; }
+  .reco .top { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; }
+  .ring { --p: 0; flex: none; width: 3.5rem; height: 3.5rem; border-radius: 50%; display: grid; place-items: center; position: relative; background: conic-gradient(from 0deg, var(--ai-a), var(--ai-b) calc(var(--p) * 1%), var(--line) 0); animation: ring 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s both; }
+  .ring::before { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--panel); }
+  .ring b { position: relative; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
   .reco .rk { color: var(--muted); font-size: 0.8125rem; }
   .reco .nm { font-weight: 600; font-size: 1.125rem; }
   .reco .sc { font-size: 1.6rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; } .reco .sc small { font-size: 0.8125rem; color: var(--muted); font-weight: 400; margin-left: 0.2rem; }
@@ -157,8 +175,8 @@
 
   <section class="card" aria-labelledby="rc" id="reco" hidden>
     <div>
-      <h2 id="rc">오늘의 채집 추천</h2>
-      <p class="note">마진, 마진율, 시세 흐름, 재고, 신뢰도를 점수로 합친 순위입니다. 앞으로의 가격을 맞히는 게 아니라 지금 데이터를 정리한 것이니 참고용으로 보세요. 카드를 누르면 아래 그래프가 그 아이템으로 바뀝니다.</p>
+      <h2 id="rc"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="spk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ai-a)"/><stop offset="1" stop-color="var(--ai-b)"/></linearGradient></defs><path fill="url(#spk)" d="M12 2l2.2 6.3L20.5 10l-6.3 1.7L12 18l-2.2-6.3L3.5 10l6.3-1.7zM19 15l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z"/></svg>오늘의 채집 추천<span class="tag">자동 분석</span></h2>
+      <p class="note">마진, 마진율, 시세 흐름, 재고, 신뢰도를 정해 둔 점수 규칙으로 자동 계산한 순위입니다. 사람이나 AI가 직접 쓴 문장이 아니고, 앞으로의 가격을 맞히는 것도 아닙니다. 참고용으로 보세요. 카드를 누르면 아래 그래프가 그 아이템으로 바뀝니다.</p>
     </div>
     <ol class="reco" id="reco-top"></ol>
     <details>
@@ -429,9 +447,11 @@
         li.style.setProperty('--i', String(i));
         li.tabIndex = 0;
         const mk = (tag, cl, text) => { const e = document.createElement(tag); if (cl) e.className = cl; if (text !== undefined) e.textContent = text; return e; };
-        li.appendChild(mk('div', 'rk', (i + 1) + '위'));
-        li.appendChild(mk('div', 'nm', x.item));
-        const sc = mk('div', 'sc', String(x.score)); sc.appendChild(mk('small', '', '점')); li.appendChild(sc);
+        const topRow = mk('div', 'top'), who = mk('div', '');
+        who.appendChild(mk('div', 'rk', (i + 1) + '위')); who.appendChild(mk('div', 'nm', x.item));
+        const ring = mk('div', 'ring'); ring.style.setProperty('--p', String(x.score)); ring.setAttribute('role', 'img'); ring.setAttribute('aria-label', x.score + '점');
+        ring.appendChild(mk('b', '', String(x.score)));
+        topRow.appendChild(who); topRow.appendChild(ring); li.appendChild(topRow);
         li.appendChild(mk('div', 'sub', '마진 ' + fmt(x.margin) + ' · 마진율 ' + (x.rate * 100).toFixed(0) + '%'));
         const chips = mk('div', 'chips'); x.reasons.forEach((r) => chips.appendChild(mk('span', 'chip ' + r.tone, r.text))); li.appendChild(chips);
         const go = () => { tItem = x.item; $('t-item').value = tItem; redraw(); $('trend').scrollIntoView({ behavior: 'smooth' }); };
