@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-10-21T16:00:07.957Z",
-  "fetchedAtKst": "2026-10-22 01:00 KST",
+  "fetchedAt": "2026-10-21T16:08:21.776Z",
+  "fetchedAtKst": "2026-10-22 01:08 KST",
   "server": 3,
   "rows": [
     {
@@ -14,11 +14,11 @@
       "verified": "Y",
       "note": "",
       "depth": 54000,
-      "stock": 26240,
+      "stock": 21239,
       "lowestQty": 592,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EA%B8%88%EC%9D%80%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "백복령",
@@ -31,11 +31,11 @@
       "verified": "Y",
       "note": "",
       "depth": 99000,
-      "stock": 703,
-      "lowestQty": 703,
+      "stock": 583,
+      "lowestQty": 583,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%B3%B5%EB%A0%B9&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "만년초",
@@ -52,7 +52,7 @@
       "lowestQty": 42,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%A7%8C%EB%85%84%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "천상초",
@@ -63,13 +63,13 @@
       "revenue": 6400000,
       "margin": 6100000,
       "verified": "Y",
-      "note": "최저가는 10개 매물이에요. 물량 기준은 175,000",
-      "depth": 175000,
-      "stock": 10392,
+      "note": "최저가는 10개 매물이에요. 물량 기준은 170,000",
+      "depth": 170000,
+      "stock": 10480,
       "lowestQty": 10,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B2%9C%EC%83%81%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "익모초",
@@ -82,28 +82,28 @@
       "verified": "Y",
       "note": "",
       "depth": 98000,
-      "stock": 7030,
+      "stock": 5839,
       "lowestQty": 33,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%9D%B5%EB%AA%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "착금감록초",
       "place": "월기봉",
       "cost": 500000,
       "expected": 50,
-      "price": 68990,
-      "revenue": 3449500,
-      "margin": 2949500,
+      "price": 68000,
+      "revenue": 3400000,
+      "margin": 2900000,
       "verified": "Y",
       "note": "",
-      "depth": 68990,
-      "stock": 6394,
-      "lowestQty": 574,
+      "depth": 68000,
+      "stock": 7317,
+      "lowestQty": 923,
       "usage": "안정제 재료 (연금술사 110레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B0%A9%EA%B8%88%EA%B0%90%EB%A1%9D%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "설삼",
@@ -114,30 +114,30 @@
       "revenue": 3000000,
       "margin": 2500000,
       "verified": "Y",
-      "note": "최저가는 1개 매물이에요. 물량 기준은 104,900",
-      "depth": 104900,
-      "stock": 44474,
-      "lowestQty": 1,
+      "note": "",
+      "depth": 100000,
+      "stock": 45148,
+      "lowestQty": 159,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "바람꽃",
       "place": "백호림",
       "cost": 1000000,
       "expected": 30,
-      "price": 146000,
-      "revenue": 4380000,
-      "margin": 3380000,
+      "price": 145000,
+      "revenue": 4350000,
+      "margin": 3350000,
       "verified": "Y",
       "note": "",
-      "depth": 146000,
-      "stock": 10891,
-      "lowestQty": 58,
+      "depth": 145000,
+      "stock": 14235,
+      "lowestQty": 99,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%94%EB%9E%8C%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "동자삼",
@@ -154,7 +154,7 @@
       "lowestQty": 1100,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%8F%99%EC%9E%90%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "화염초 + 태양초",
@@ -167,11 +167,11 @@
       "verified": "Y",
       "note": "개당 최저가: 화염초 55,000, 태양초 175,000",
       "depth": 55000,
-      "stock": 11643,
+      "stock": 11474,
       "lowestQty": 120,
       "usage": "붉은색가루 재료 (전문연금술사 150레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%94%EC%97%BC%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "설련화",
@@ -184,11 +184,11 @@
       "verified": "Y",
       "note": "",
       "depth": 175000,
-      "stock": 6004,
+      "stock": 5217,
       "lowestQty": 35,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EB%A0%A8%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "황금연꽃",
@@ -205,24 +205,24 @@
       "lowestQty": 242,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%A9%EA%B8%88%EC%97%B0%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     },
     {
       "item": "백련초",
       "place": "사막지대",
       "cost": 2000000,
       "expected": 30,
-      "price": 200000,
-      "revenue": 6000000,
-      "margin": 4000000,
+      "price": 175000,
+      "revenue": 5250000,
+      "margin": 3250000,
       "verified": "Y",
       "note": "",
-      "depth": 200000,
-      "stock": 456,
+      "depth": 175000,
+      "stock": 656,
       "lowestQty": 35,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%A0%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-22 01:00 KST"
+      "fetched_at": "2026-10-22 01:08 KST"
     }
   ],
   "errors": []
