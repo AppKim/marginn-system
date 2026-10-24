@@ -1,6 +1,6 @@
 {
-  "fetchedAt": "2026-10-24T14:39:51.108Z",
-  "fetchedAtKst": "2026-10-24 23:39 KST",
+  "fetchedAt": "2026-10-24T14:54:57.085Z",
+  "fetchedAtKst": "2026-10-24 23:54 KST",
   "server": 3,
   "rows": [
     {
@@ -14,28 +14,28 @@
       "verified": "Y",
       "note": "",
       "depth": 79000,
-      "stock": 35081,
+      "stock": 30081,
       "lowestQty": 760,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EA%B8%88%EC%9D%80%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "백복령",
       "place": "한라산",
       "cost": 100000,
       "expected": 40,
-      "price": 143000,
-      "revenue": 5720000,
-      "margin": 5620000,
+      "price": 140000,
+      "revenue": 5600000,
+      "margin": 5500000,
       "verified": "Y",
       "note": "",
-      "depth": 143000,
-      "stock": 5420,
-      "lowestQty": 44,
+      "depth": 140000,
+      "stock": 6074,
+      "lowestQty": 120,
       "usage": "백색가루 재료 (연금술사 25레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%B3%B5%EB%A0%B9&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "만년초",
@@ -48,11 +48,11 @@
       "verified": "Y",
       "note": "",
       "depth": 100000,
-      "stock": 35263,
+      "stock": 33290,
       "lowestQty": 3923,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%A7%8C%EB%85%84%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "천상초",
@@ -69,7 +69,7 @@
       "lowestQty": 3088,
       "usage": "금색가루 재료 (연금술사 45레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B2%9C%EC%83%81%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "익모초",
@@ -82,11 +82,11 @@
       "verified": "Y",
       "note": "",
       "depth": 99999,
-      "stock": 11193,
+      "stock": 5597,
       "lowestQty": 33,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%9D%B5%EB%AA%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "착금감록초",
@@ -99,11 +99,11 @@
       "verified": "Y",
       "note": "",
       "depth": 69000,
-      "stock": 303,
-      "lowestQty": 302,
+      "stock": 268,
+      "lowestQty": 267,
       "usage": "안정제 재료 (연금술사 110레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%B0%A9%EA%B8%88%EA%B0%90%EB%A1%9D%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "설삼",
@@ -116,11 +116,11 @@
       "verified": "Y",
       "note": "최저가는 2개 매물이에요. 물량 기준은 109,000",
       "depth": 109000,
-      "stock": 29536,
+      "stock": 30443,
       "lowestQty": 2,
       "usage": "푸른색가루 재료 (연금술사 80레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "바람꽃",
@@ -133,28 +133,28 @@
       "verified": "Y",
       "note": "",
       "depth": 160000,
-      "stock": 11738,
+      "stock": 15997,
       "lowestQty": 600,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%94%EB%9E%8C%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "동자삼",
       "place": "개마장원",
       "cost": 1000000,
       "expected": 40,
-      "price": 127000,
-      "revenue": 5080000,
-      "margin": 4080000,
+      "price": 126000,
+      "revenue": 5040000,
+      "margin": 4040000,
       "verified": "Y",
       "note": "",
-      "depth": 127000,
-      "stock": 7640,
-      "lowestQty": 414,
+      "depth": 126000,
+      "stock": 7776,
+      "lowestQty": 92,
       "usage": "검은색가루 재료 (연금술사 125레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%8F%99%EC%9E%90%EC%82%BC&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "화염초 + 태양초",
@@ -167,11 +167,11 @@
       "verified": "N",
       "note": "개당 최저가: 화염초 55,000, 태양초 157,000. 태양초은 이번에 읽지 못해 2026-10-24 17:16 KST 값을 썼어요",
       "depth": 55000,
-      "stock": 1617,
+      "stock": 1068,
       "lowestQty": 302,
       "usage": "붉은색가루 재료 (전문연금술사 150레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%94%EC%97%BC%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "설련화",
@@ -184,11 +184,11 @@
       "verified": "Y",
       "note": "",
       "depth": 167900,
-      "stock": 9385,
+      "stock": 12833,
       "lowestQty": 70,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EC%84%A4%EB%A0%A8%ED%99%94&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "황금연꽃",
@@ -201,11 +201,11 @@
       "verified": "Y",
       "note": "",
       "depth": 198000,
-      "stock": 10737,
+      "stock": 10226,
       "lowestQty": 345,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%ED%99%A9%EA%B8%88%EC%97%B0%EA%BD%83&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     },
     {
       "item": "백련초",
@@ -218,11 +218,11 @@
       "verified": "Y",
       "note": "",
       "depth": 165000,
-      "stock": 7830,
+      "stock": 6081,
       "lowestQty": 33,
       "usage": "오색가루 재료 (전문연금술사 195레벨)",
       "link": "https://gerinee.com/trade?server=3&q=%EB%B0%B1%EB%A0%A8%EC%B4%88&sort=UNIT_PRICE",
-      "fetched_at": "2026-10-24 23:39 KST"
+      "fetched_at": "2026-10-24 23:54 KST"
     }
   ],
   "errors": [
