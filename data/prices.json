@@ -1,117 +1,117 @@
 {
-  "fetchedAt": "2026-10-31T09:49:12.689Z",
+  "fetchedAt": "2026-10-31T16:12:00.228Z",
   "prices": {
     "금은화": {
-      "price": 89999,
-      "lowestQty": 8,
-      "depthPrice": 90000,
-      "stock": 52249,
-      "listed": 22,
-      "at": "2026-10-31 18:49 KST"
+      "price": 88000,
+      "lowestQty": 92,
+      "depthPrice": 88000,
+      "stock": 48957,
+      "listed": 23,
+      "at": "2026-11-01 01:12 KST"
     },
     "백복령": {
-      "price": 100000,
-      "lowestQty": 4,
-      "depthPrice": 110000,
-      "stock": 7744,
+      "price": 99000,
+      "lowestQty": 88,
+      "depthPrice": 99000,
+      "stock": 7088,
       "listed": 13,
-      "at": "2026-10-31 18:49 KST"
+      "at": "2026-11-01 01:12 KST"
     },
     "만년초": {
-      "price": 114000,
-      "lowestQty": 300,
-      "depthPrice": 114000,
-      "stock": 15948,
-      "listed": 12,
-      "at": "2026-10-31 18:49 KST"
+      "price": 110000,
+      "lowestQty": 132,
+      "depthPrice": 110000,
+      "stock": 17414,
+      "listed": 16,
+      "at": "2026-11-01 01:12 KST"
     },
     "천상초": {
       "price": 98000,
-      "lowestQty": 44,
-      "depthPrice": 98000,
-      "stock": 9569,
+      "lowestQty": 4,
+      "depthPrice": 99000,
+      "stock": 15854,
       "listed": 15,
-      "at": "2026-10-31 18:49 KST"
+      "at": "2026-11-01 01:12 KST"
     },
     "익모초": {
-      "price": 99999,
-      "lowestQty": 1,
-      "depthPrice": 105000,
-      "stock": 17759,
-      "listed": 24,
-      "at": "2026-10-31 18:49 KST"
+      "price": 95000,
+      "lowestQty": 99,
+      "depthPrice": 95000,
+      "stock": 12388,
+      "listed": 30,
+      "at": "2026-11-01 01:12 KST"
     },
     "착금감록초": {
-      "price": 90000,
-      "lowestQty": 1066,
-      "depthPrice": 90000,
-      "stock": 1066,
-      "listed": 1,
-      "at": "2026-10-31 18:49 KST"
+      "price": 70000,
+      "lowestQty": 50,
+      "depthPrice": 70000,
+      "stock": 1731,
+      "listed": 3,
+      "at": "2026-11-01 01:12 KST"
     },
     "설삼": {
-      "price": 95000,
-      "lowestQty": 2,
-      "depthPrice": 99000,
-      "stock": 28387,
-      "listed": 20,
-      "at": "2026-10-31 18:49 KST"
+      "price": 90000,
+      "lowestQty": 1,
+      "depthPrice": 95000,
+      "stock": 28923,
+      "listed": 26,
+      "at": "2026-11-01 01:12 KST"
     },
     "바람꽃": {
-      "price": 99500,
-      "lowestQty": 822,
-      "depthPrice": 99500,
-      "stock": 17149,
-      "listed": 19,
-      "at": "2026-10-31 18:49 KST"
+      "price": 118000,
+      "lowestQty": 555,
+      "depthPrice": 118000,
+      "stock": 14941,
+      "listed": 8,
+      "at": "2026-11-01 01:12 KST"
     },
     "동자삼": {
-      "price": 100000,
-      "lowestQty": 44,
-      "depthPrice": 100000,
-      "stock": 6259,
-      "listed": 9,
-      "at": "2026-10-31 18:49 KST"
+      "price": 101000,
+      "lowestQty": 3,
+      "depthPrice": 105000,
+      "stock": 5007,
+      "listed": 5,
+      "at": "2026-11-01 01:12 KST"
     },
     "화염초": {
-      "price": 73000,
-      "lowestQty": 1152,
-      "depthPrice": 73000,
-      "stock": 3267,
-      "listed": 5,
-      "at": "2026-10-31 18:49 KST"
+      "price": 90000,
+      "lowestQty": 70,
+      "depthPrice": 90000,
+      "stock": 135,
+      "listed": 2,
+      "at": "2026-11-01 01:12 KST"
     },
     "태양초": {
-      "price": 122000,
-      "lowestQty": 1152,
-      "depthPrice": 122000,
-      "stock": 31191,
-      "listed": 20,
-      "at": "2026-10-31 18:49 KST"
+      "price": 125000,
+      "lowestQty": 4736,
+      "depthPrice": 125000,
+      "stock": 27663,
+      "listed": 15,
+      "at": "2026-11-01 01:12 KST"
     },
     "설련화": {
-      "price": 154000,
-      "lowestQty": 33,
-      "depthPrice": 154000,
-      "stock": 9802,
+      "price": 155000,
+      "lowestQty": 765,
+      "depthPrice": 155000,
+      "stock": 9910,
       "listed": 14,
-      "at": "2026-10-31 18:49 KST"
+      "at": "2026-11-01 01:12 KST"
     },
     "황금연꽃": {
-      "price": 160000,
-      "lowestQty": 88,
-      "depthPrice": 160000,
-      "stock": 7475,
-      "listed": 11,
-      "at": "2026-10-31 18:49 KST"
+      "price": 163000,
+      "lowestQty": 3014,
+      "depthPrice": 163000,
+      "stock": 12583,
+      "listed": 13,
+      "at": "2026-11-01 01:12 KST"
     },
     "백련초": {
       "price": 150000,
-      "lowestQty": 35,
-      "depthPrice": 150000,
-      "stock": 10691,
-      "listed": 20,
-      "at": "2026-10-31 18:49 KST"
+      "lowestQty": 1,
+      "depthPrice": 155000,
+      "stock": 9381,
+      "listed": 16,
+      "at": "2026-11-01 01:12 KST"
     }
   }
 }
